@@ -21,9 +21,9 @@ void moveBall(float* x, float* y, float* vx, float* vy)
         if (*x > 700 || *x < 100)
             *vx = -*vx;
 }
-void collideBall(float* x1, float* y1, float* r1, float* x2, float* y2, float* r2, float* vx1, float* vy1, float* vx2, float* vy2)
+void collideBall(float* x1, float* y1, float r1, float* x2, float* y2, float r2, float* vx1, float* vy1, float* vx2, float* vy2)
 {
-        if (((*x2-*x1)*(*x2-*x1) + (*y2-*y1)*(*y2-*y1)) <= (*r2+*r1)*(*r1+*r2))
+        if (((*x2-*x1)*(*x2-*x1) + (*y2-*y1)*(*y2-*y1)) <= (r2+r1)*(r1+r2))
             *vx1 = -*vx1;
             *vy1 = -*vy1;
             *vx2 = -*vx2;
@@ -50,7 +50,7 @@ int main()
         drawBall(x2, y2, 50, 0, 255, 0);
         moveBall(&x1, &y1, &vx1, &vy1);
         moveBall(&x2, &y2, &vx2, &vy2);
-        collideBall(&x1, &y1, &r1, &x2, &y2, &r2, &vx1, &vy1, &vx2, &vy2);
+        collideBall(&x1, &y1, r1, &x2, &y2, r2, &vx1, &vy1, &vx2, &vy2);
         txSleep(dt);
     }
 
