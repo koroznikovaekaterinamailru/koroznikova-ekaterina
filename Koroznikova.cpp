@@ -48,11 +48,12 @@ void controllBall(ball* Example)
 void collideBall(ball* one, ball* two)
 {
         if  ((((*two).x-(*one).x)*((*two).x-(*one).x) + ((*two).y-(*one).y)*((*two).y-(*one).y)) <= ((*two).r+(*one).r)*((*one).r+(*two).r))
-            (*one).vx = -(*one).vx;
+        {
+           (*one).vx = -(*one).vx;
             (*one).vy = - (*one).vy;
             (*two).vx = -(*two).vx;
             (*two).vy = -(*two).vy;
-
+        }
 
  }
 int main()
