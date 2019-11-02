@@ -34,13 +34,25 @@ void moveBall(ball* Example)
         if ((*Example).x > 700 || (*Example).x < 100)
             (*Example).vx = -(*Example).vx;
 }
+void controllBall(ball* Example)
+{
+    if (GetAsyncKeyState(VK_LEFT))
+    (*Example).vx = (*Example).vx - 1;
+    if (GetAsyncKeyState(VK_RIGHT))
+    (*Example).vx = (*Example).vx + 1;
+    if (GetAsyncKeyState(VK_UP))
+    (*Example).vy = (*Example).vy - 1;
+    if (GetAsyncKeyState(VK_DOWN))
+    (*Example).vy = (*Example).vy + 1;
+}
 void collideBall(ball* one, ball* two)
 {
-        if ((((*two).x-(*one).x)*((*two).x-(*one).x) + ((*two).y-(*one).y)*((*two).y-(*one).y)) <= ((*two).r+(*one).r)*((*one).r+(*two).r))
+        if  ((((*two).x-(*one).x)*((*two).x-(*one).x) + ((*two).y-(*one).y)*((*two).y-(*one).y)) <= ((*two).r+(*one).r)*((*one).r+(*two).r))
             (*one).vx = -(*one).vx;
             (*one).vy = - (*one).vy;
             (*two).vx = -(*two).vx;
             (*two).vy = -(*two).vy;
+
 
  }
 int main()
@@ -57,7 +69,7 @@ int main()
     one.vx = 100;
     one.vy = 100;
 
-    ball two = { 200, 200, 50, 0, 255, 0, 100, 100};
+    ball two = { 200, 200, 50, 0, 255, 0, 100, 200};
 
     for ( ; ; )
     {
@@ -66,6 +78,8 @@ int main()
         drawBall(two);
         moveBall(&one);
         moveBall(&two);
+        controllBall(&one);
+        controllBall(&two);
         collideBall(&one, &two);
         txSleep(dt);
            }
