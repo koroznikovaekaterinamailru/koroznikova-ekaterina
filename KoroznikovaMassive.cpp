@@ -61,26 +61,27 @@ int main()
 {
     txCreateWindow(800, 600);
 
-    ball *Example = new ball [50];   
+    ball *Example = new ball [50];
 
         for (int i = 0; i < 15; i++)
     {
         for(int j = 1; j < 20; j++)
         {
-            Example[i * 15 + (j - 1)].x = (j + 1) * 40;
-            Example[i * 15 + (j - 1)].y = (i + 1) * 30;
-            Example[i * 15 + (j - 1)].RED = 255;
-            Example[i * 15 + (j - 1)].GREEN = 0;
-            Example[i * 15 + (j - 1)].BLUE = 0;
-            Example[i * 15 + (j - 1)].r = 10;
-            Example[i * 15 + (j - 1)].vx = 100;
-            Example[i * 15 + (j - 1)].vy = 100;
+            Example[i*2+j].x = (j + 1) * 40;
+            Example[i*2+j].y = (i + 1) * 30;
+            Example[i*2+j].RED = 255;
+            Example[i*2+j].GREEN = 0;
+            Example[i*2+j].BLUE = 0;
+            Example[i*2+j].r = 10;
+            Example[i*2+j].vx = 100;
+            Example[i*2+j].vy = 100;
         }
     }
-    
+
     for ( ; ; )
-    txBegin();
     {
+    txBegin();
+
        for(int i = 0; i < 50; i++)
         {
 
@@ -88,14 +89,16 @@ int main()
             moveBall(&Example[i]);
             controllBall(&Example[i]);
             txSetFillColor(RGB(0,0,0));
+    txEnd();
             for(int j = 0; j < 50; j++)
             {
                 collideBall(&Example[i], &Example[j]);
             }
         }
         txSleep(dt);
-        txEnd();
-           }
+
+        }
+    delete [] Example;
 
 return 0;
 }
