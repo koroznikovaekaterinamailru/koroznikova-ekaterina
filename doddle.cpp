@@ -1,9 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <iostream>
-    
-const int weight = 500;
-const int height = 700;
 
 struct Plat
 { 
@@ -13,6 +10,8 @@ struct Plat
     int weightPlarform = 80;
     int heightPlatform = 15;
     int number_of_points = 0;
+    int weight = 500;
+    int height = 700;
 };
 
 void drawPlatform(Plat* plat, int array, sf::RenderWindow* window) 
@@ -22,7 +21,7 @@ void drawPlatform(Plat* plat, int array, sf::RenderWindow* window)
     for (int i = 0; i < array ;i++)
     {
         platform.setPosition(plat[i].x, plat[i].y); 
-        window->draw(platform); 
+        window -> draw(platform); 
     }
 }
 
@@ -42,8 +41,8 @@ void PlatformPosition(Plat* plat, int array, sf::RenderWindow* window)
 {
     for (int i = 0; i < array; i++) 
     { 
-        plat[i].x = rand() % (weight - plat -> weightPlarform); 
-        plat[i].y = rand() % (height - plat -> heightPlatform); 
+        plat[i].x = rand() % (plat -> weight - plat -> weightPlarform); 
+        plat[i].y = rand() % (plat -> height - plat -> heightPlatform); 
         for(int j = 0; j < array; j++)
         {
             abs(plat[j].x - plat[i].x) < plat -> weightPlarform;
@@ -61,10 +60,10 @@ void Scroll(Plat* plat, int array, sf::RenderWindow* window)
         {
             plat -> y = scroll;
             plat[i].y -=  plat -> dy;
-            if (plat[i].y > height) 
+            if (plat[i].y > plat -> height) 
                 {
                     plat[i].y = 0; 
-                    plat[i].x = rand() % (weight - plat -> weightPlarform);
+                    plat[i].x = rand() % (plat -> weight - plat -> weightPlarform);
                 }
         }
 }
@@ -90,7 +89,7 @@ void MoveMonster(Plat* plat, int array, sf::RenderWindow* window)
 
     if (plat -> x < 0)
         plat -> x += 3;
-    if ((plat -> x) > (weight - 80))
+    if ((plat -> x) > (plat -> weight - 80))
         plat -> x -= 3;
 
     if (plat -> number_of_points < 1)
@@ -102,7 +101,7 @@ void MoveMonster(Plat* plat, int array, sf::RenderWindow* window)
     }
     else
     {    
-        if (plat -> y > height)  
+        if (plat -> y > plat -> height)  
         {
             window -> draw(spriteGameOver);    
         }
@@ -122,7 +121,7 @@ void FromMenuToRecords(Plat* plat, sf::RenderWindow* window)
     text.setFont(font); 
     text.setCharacterSize(30);
     text.setFillColor(sf::Color(255, 255, 255));
-    text.setPosition(weight/2 - 20, height/2 - 20);
+    text.setPosition(plat -> weight/2 - 20, plat -> height/2 - 20);
 
     sf::Texture background;
     background.loadFromFile("1.jpg");
@@ -137,6 +136,8 @@ void FromMenuToRecords(Plat* plat, sf::RenderWindow* window)
 
 int main()
 {
+    int weight = 500;
+    int height = 700;
     srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(weight, height), "Good Game!");
 
@@ -203,5 +204,7 @@ int main()
         }
         window.display();
     }
+    
+    delete [] plat;
     return 0;
 }
